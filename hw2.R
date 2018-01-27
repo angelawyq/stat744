@@ -1,9 +1,10 @@
-library(ggplot2)
+## library(ggplot2)
 library(tidyverse)
-library(dplyr)
-library(readr)
+## BMB: tidyverse loads dplyr, reader, ggplot2 by default
+## library(dplyr)
+## library(readr)
 library(directlabels)
-library(faraway)
+library(faraway)  ## what for? helpful to comment
 theme_set(theme_bw())
 dat<-read_csv("https://bbolker.github.io/stat744/data/vaccine_data_online.csv")
 
@@ -13,9 +14,13 @@ dat<-read_csv("https://bbolker.github.io/stat744/data/vaccine_data_online.csv")
 #This shows that vaccines can do more good than harm.
 
 
-(dat %>% filter(cases>0) %>% mutate(disease=fct_reorder(f=disease,x=year,fun=min))) -> dat
-View(dat)
+## BMB: +1 for reordering
+(dat %>% filter(cases>0) %>%
+ mutate(disease=fct_reorder(f=disease,x=year,fun=min))) -> dat
+## BMB: please comment these out
+##View(dat)
 options(scipen = 100000)
+## BMB: how did you pick this palette?
 cbPalette <- c("#000000","#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 gg1 <- (ggplot(dat,aes(x=year, y=cases, colour=disease))+ 
           geom_line() + 
@@ -28,13 +33,28 @@ gg1 <- (ggplot(dat,aes(x=year, y=cases, colour=disease))+
           scale_x_continuous(breaks=seq(1945,2015,by=10))+
           facet_wrap(~disease)
 )
-print(gg1+theme(legend.position="none")+scale_color_manual(values=cbPalette))
+
+
+print(gg1+theme(legend.position="none")+
+      ## BMB: good.  I would (1) squeeze panels together
+      ## (although this also causes problems with tick label overlaps)
+      ## theme(panel.spacing=grid::unit(0,"lines"))+
+      scale_color_manual(values=cbPalette))
+
+## BMB: colour is redundant
 
 #In my opinion, my graph does not provide the same amount of information
 #as the original graph, in fact, much less. However, my graph is somewhat
 #straight forward, and readers can see the decrease clearly for every 
 #disease, which fulfills the goal of informing the readers that vaccines
-#have been helping with eliminating diseases. 
+#have been helping with eliminating diseases.
+
+## BMB: why less information? other than dynamic graphics, and labels for events,
+##  isn't this the *same* information?
+## note that you say "(log transformed)", I think you mean "(log scale)", since
+## you haven't actually transformed the data ...
+## colour is redundant (but pretty)
+## note that mumps vaccine indicator 
 
 #I read the comments from HW1, and I took a lot of useful advice.
 #First, I suppress the legend in this graph since it doesn't provide information.
@@ -44,10 +64,16 @@ print(gg1+theme(legend.position="none")+scale_color_manual(values=cbPalette))
 #representing the year for vaccine licence. Unfortunately, 
 #I did not have enough time to figure out the code to do that. 
 
+## BMB: how about ...
+print(gg1+theme(legend.position="none")+
+      labs(caption="dots on each line represent the year of vaccine licensing")+
+      scale_x_continuous(breaks=seq(1950,2010,by=10))+
+      theme(panel.spacing=grid::unit(0,"lines"))+
+      scale_color_manual(values=cbPalette))
 
 log.cases<-log(dat$cases)
 gg2 <- (ggplot(dat,aes(y=year,x=disease,fill=disease,width=log.cases))+
-    geom_violin() +
+    geom_violin(stat="identity",aes(x=log.cases)) +
     scale_y_continuous(breaks=seq(1945,2015,by=5)) +
     coord_flip()+
     ylab("Year") +
@@ -68,3 +94,6 @@ print(gg2+
 #I could not fit the point for vaccine license in there, so the graph
 #lost the purpose of showing the effect of vaccines.
 
+## BMB: it's a little weird, but it is at least interesting/visually attractive
+## there might be a way to get the "violin" shape with raw values, but it's
+## not super-easy.  I'm not sure what this transformation actually does ...
