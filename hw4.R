@@ -21,7 +21,6 @@ gg1 <- (ggplot(concentration_avg,aes(x=Site, y=conc.avg+1, colour=Compound)) +
           ggtitle("Estimated time-weighted concentrations of 24 Compounds from different sites") +
           theme(plot.title = element_text(hjust=0.5))+
           geom_dl(aes(label=Compound),method=list("top.bumptwice",cex=0.7))+
-          scale_x_discrete()+
           scale_y_log10(breaks=c(1,10,100,1000),labels=c(1,10,100,1000))+
           facet_wrap(~Class)
 )
