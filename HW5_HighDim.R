@@ -14,7 +14,11 @@ library(mlbench)
 data(wine,package="gclus")
 animate(wine[, 2:10], tour_path=grand_tour(), display=display_xy())
 animate_faces(wine[2:10, 2:10], grand_tour(9))
+## BMB: not much to see here ?
 
+## BMB: can you say a little bit more about what you did here and why?
+## seems clear that points fall near edges/1 face of simplex, but
+##  what does that mean?
 data(Glass)
 glass_sub <- filter(Glass, Type %in% c("1","2","3","5")) %>% 
   mutate(Type=factor(Type))

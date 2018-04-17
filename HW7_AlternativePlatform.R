@@ -1,3 +1,6 @@
+## BMB: where did these countries/values come from? Did you just pick
+## these arbitrarily?
+
 library(networkD3)
 #create data:
 links=data.frame(
