@@ -27,3 +27,4 @@ plot(network,
 )
 text(-1.5,-1.5,"China One Belt One Road Initiative",col="black")
 
+## JD: What is this meant to be a network of? I'm pretty sure the initiative doesn't contain a road from Sri Lanka to Kenya!
