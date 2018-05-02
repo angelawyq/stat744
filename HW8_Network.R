@@ -28,3 +28,5 @@ plot(network,
 text(-1.5,-1.5,"China One Belt One Road Initiative",col="black")
 
 ## JD: What is this meant to be a network of? I'm pretty sure the initiative doesn't contain a road from Sri Lanka to Kenya!
+## http://www.scmp.com/infographics/article/1874865/infographic-one-belt-one-road
+## I think that it is a maritime silk road of 21st century, but I did not include every single country that is involved. 
